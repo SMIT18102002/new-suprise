@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>7 Months of Friendship Joy! 💖 - Next Level</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Quicksand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="starry-night"></div>
+
+    <header>
+      Happy 7 Months of Bestieversary Ayuuuu! <span class="sparkle">✨</span>
+    </header>
+    <p class="subtitle">
+      Celebrating every laugh, every secret, and every moment that made our
+      friendship so special.I love you ayu🥰❤️. Ready for many more memories
+      together! 💕
+    </p>
+    <button id="celebrateBtn">Show the Love 💖</button>
+
+    <div id="surprise" aria-live="polite" aria-atomic="true">
+      <h2>Dear Ayuuuu❤️,</h2>
+      <p id="typewriter-text"></p>
+      <p class="quote">
+        "Friendship is the golden thread that ties hearts together."
+      </p>
+      <div class="gallery" aria-label="Friendship celebration images">
+        <img src="./1.jpg" alt="Friendship celebration 1" />
+        <img src="./7.jpg" alt="Friendship celebration 4" />
+        <img src="./2.jpg" alt="Friendship celebration 4" />
+        <video controls autoplay muted loop height="350" width="600">
+          <source src="v2.mp4" type="video/mp4" width="500" />
+          Your browser does not support the video tag.
+        </video>
+        <img src="./a1.jpg" alt="">
+        <img src="./s1.jpg" alt="">
+        <img src="./4.jpg" alt="Friendship celebration 3" />
+        <img src="./6.png" alt="Friendship celebration 5" />
+        <video controls autoplay muted loop height="350" width="600">
+          <source src="v1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <img src="./5.jpg" alt="Friendship celebration 2" />
+      </div>
+    </div>
+
+    <div id="memory-jar" title="Click for a sweet memory">Memory Jar</div>
+    <div id="memory-message"></div>
+
+    <audio id="music-box" loop>
+      <source src="Perfect-(Mr-Jat.in).mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="memory-sound">
+      <source src="sharp-pop-328170.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <canvas class="confetti" width="1920" height="1080"></canvas>
+
+    <script>
+      const celebrateBtn = document.getElementById("celebrateBtn");
+      const surprise = document.getElementById("surprise");
+      const typewriterText = document.getElementById("typewriter-text");
+      const musicBox = document.getElementById("music-box");
+      const memoryJar = document.getElementById("memory-jar");
+      const memoryMessage = document.getElementById("memory-message");
+      // const confettiCanvas = document.querySelector(".confetti");
+      // const ctx = confettiCanvas.getContext("2d");
+
+      let heartsInterval;
+      let confettiPieces = [];
+      let confettiAnimationId;
+      let starElements = [];
+      let starCount = 100;
+
+      const message =
+        "You are the sunshine that lights up my world and the warmth that comforts my soul💓😌.These 7 magical months with you have been nothing short of a beautiful fairytale — filled with laughter, late-night talks, and unforgettable moments. 🌟Thank you for being the most caring, kind-hearted, and irreplaceable bestie anyone could ever dream of🫂🥹. 💖Here’s to our growing bond, to every new chapter we’ll write together, and to a forever filled with joy, support, and endless smiles. ✨💫";
+
+      // Initialize starry night background
+      function createStars() {
+        const starryNight = document.getElementById("starry-night");
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement("div");
+          star.classList.add("star");
+          star.style.width = star.style.height = Math.random() * 2 + 1 + "px";
+          star.style.top = Math.random() * window.innerHeight + "px";
+          star.style.left = Math.random() * window.innerWidth + "px";
+          star.style.animationDuration = Math.random() * 3 + 2 + "s";
+          star.style.animationDelay = Math.random() * 3 + "s";
+          starryNight.appendChild(star);
+          starElements.push(star);
+        }
+      }
+
+      // Update star positions based on mouse movement
+      function updateStars(e) {
+        starElements.forEach((star, index) => {
+          const speed = ((index + 1) / starCount) * 0.5;
+          const x = parseFloat(star.style.left);
+          const y = parseFloat(star.style.top);
+          const newX = x + e.movementX * speed;
+          const newY = y + e.movementY * speed;
+          star.style.left =
+            ((newX + window.innerWidth) % window.innerWidth) + "px";
+          star.style.top =
+            ((newY + window.innerHeight) % window.innerHeight) + "px";
+        });
+      }
+
+      // Typewriter effect with floating hearts
+      function typeWriter(text, i = 0) {
+        if (i < text.length) {
+          typewriterText.innerHTML += text.charAt(i);
+          if (text.charAt(i) !== " ") {
+            createHeart();
+          }
+          setTimeout(() => typeWriter(text, i + 1), 70);
+        }
+      }
+
+      // Create floating heart emoji
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 1.5 + 1 + "rem";
+        heart.style.animationDuration = Math.random() * 4 + 4 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+      }
+
+      // Confetti animation
+      const confettiCanvas = document.querySelector(".confetti");
+      const ctx = confettiCanvas.getContext("2d");
+
+      function startConfetti() {
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        confettiPieces = Array.from({ length: 120 }, () => ({
+          x: Math.random() * confettiCanvas.width,
+          y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+          size: Math.random() * 7 + 3,
+          speed: Math.random() * 3 + 2,
+          angle: Math.random() * 2 * Math.PI,
+          angularSpeed: (Math.random() - 0.5) * 0.1,
+          color: `hsl(${Math.random() * 360}, 80%, 70%)`,
+          tilt: Math.random() * 15 - 7.5,
+        }));
+
+        function draw() {
+          ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+          confettiPieces.forEach((p) => {
+            p.y += p.speed;
+            p.x += Math.sin(p.angle) * 2;
+            p.angle += p.angularSpeed;
+            p.tilt += 0.1;
+
+            if (p.y > confettiCanvas.height) {
+              p.y = -10;
+              p.x = Math.random() * confettiCanvas.width;
+            }
+            if (p.x > confettiCanvas.width) p.x = 0;
+            if (p.x < 0) p.x = confettiCanvas.width;
+
+            ctx.beginPath();
+            ctx.lineWidth = p.size;
+            ctx.strokeStyle = p.color;
+            ctx.moveTo(p.x + p.tilt, p.y);
+            ctx.lineTo(p.x + p.tilt + p.size / 2, p.y + p.size);
+            ctx.stroke();
+          });
+          confettiAnimationId = requestAnimationFrame(draw);
+        }
+        draw();
+      }
+
+      console.log("Canvas size:", confettiCanvas.width, confettiCanvas.height);
+
+      // Memory Jar messages
+      const memories = [
+        "Remember our first meet up ? 🤗",
+        "That time we laughed till we cried 😂",
+        "Our secret handhold in bus always makes me smile 🤝",
+        "Late night talks under the stars ✨",
+        "Writing letter to each other was so special 📝",
+        "First Hug at midnight was so special 🫂",
+        "You always know how to cheer me up 💖",
+        "Our spontaneous road trip on Bike 🏍️",
+        "Our First Kiss was so magical 😘",
+        "The way you say Oppa makes my heart flutter 💕",
+        "Forever grateful for your friendship 🌸",
+        "You are my sunshine on cloudy days ☀️",
+        "Here's to many more memories together! 🎉",
+      ];
+
+      // Show random memory message
+
+      let memoryIndex = 0;
+      let memoryLoopStarted = false;
+      let memoryInterval;
+
+      const memorySound = document.getElementById("memory-sound");
+
+      function createFloatingHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("floating-heart");
+
+        // Random emojis for variety
+        const symbols = ["💖", "✨", "🥰", "💝", "💓", "🩷", "🌟", "💕", "😍"];
+        for (let i = 0; i < 4; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("floating-heart");
+          heart.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+          // Random position near memory message
+          heart.style.left = Math.random() * 80 + 10 + "vw";
+          heart.style.top = Math.random() * 20 + 60 + "vh";
+          heart.style.animationDuration = Math.random() * 2 + 2 + "s";
+          heart.style.fontSize = Math.random() * 2 + 1 + "rem";
+
+          document.body.appendChild(heart);
+
+          setTimeout(() => heart.remove(), 3000);
+        }
+      }
+
+      function showMemoryLoop() {
+        const memory = memories[memoryIndex];
+        memoryMessage.classList.remove("show");
+
+        setTimeout(() => {
+          memoryMessage.textContent = memory;
+          memoryMessage.classList.add("show");
+
+          // Play sound
+          memorySound.currentTime = 0;
+          memorySound.play();
+
+          // Create sparkle/heart
+          createFloatingHeart();
+        }, 300);
+
+        memoryIndex = (memoryIndex + 1) % memories.length;
+      }
+
+      memoryJar.addEventListener("click", () => {
+        showMemoryLoop();
+
+        if (!memoryLoopStarted) {
+          memoryLoopStarted = true;
+          memoryInterval = setInterval(showMemoryLoop, 6000);
+        }
+      });
+
+      // Event listeners
+      celebrateBtn.addEventListener("click", () => {
+        surprise.style.display = "block";
+        celebrateBtn.style.display = "none";
+        musicBox.play();
+        startConfetti();
+        typeWriter(message);
+      });
+
+      memoryJar.addEventListener("click", () => {
+        showMemory();
+      });
+
+      window.addEventListener("resize", () => {
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+      });
+
+      window.addEventListener("mousemove", updateStars);
+
+      // Initialize stars on load
+      createStars();
+    </script>
+  </body>
+</html>
